@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Search } from 'lucide-react';
 import { CopyButton, FieldTable, Header, parseUrl } from './url-tools';
 
@@ -9,6 +9,13 @@ const exampleDynamicUrl =
 
 export default function DynamicPage() {
   const [url, setUrl] = useState(exampleDynamicUrl);
+
+  useEffect(() => {
+    if (window.location.search || window.location.hash) {
+      setUrl(window.location.href);
+    }
+  }, []);
+
   const result = useMemo(() => parseUrl(url), [url]);
 
   return (
