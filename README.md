@@ -7,17 +7,17 @@ ID Keep is a simple Next.js app for pulling ID-style values out of links.
 The app has two pages:
 
 - `/` lets someone paste a link and see the values attached to it.
-- `/static` reads the current page URL and shows the six-digit `child` code if one is present.
+- `/static` reads the current page URL and shows the `child` code if one is present.
 
 For example, this link:
 
 ```txt
-https://example.com/form?child=483920&case=summer
+https://example.com/form?child=AB483Z&case=summer
 ```
 
 will show:
 
-- `child` = `483920`
+- `child` = `AB483Z`
 - `case` = `summer`
 
 The app also includes copy buttons so people can copy the child code or an individual field value.
@@ -30,7 +30,7 @@ ID Keep checks:
 - Hash fields, like `#child=483920`
 - Six-digit codes in the URL path, like `/child/483920`
 
-If a `child` field has a six-digit value, that value is shown as the child code.
+If a `child` field has any non-empty value, that value is shown as the child code. If there is no `child` field, the app can still fall back to a six-digit code found in the URL path or another field value.
 
 ## Local Development
 

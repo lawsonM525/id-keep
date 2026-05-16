@@ -5,7 +5,7 @@ import { Search } from 'lucide-react';
 import { CopyButton, FieldTable, Header, parseUrl } from './url-tools';
 
 const exampleDynamicUrl =
-  'https://example.org/intake?child=483920&case=summer&guardian=michelle#source=school';
+  'https://example.org/intake?child=AB483Z&case=summer&guardian=michelle#source=school';
 
 export default function DynamicPage() {
   const [url, setUrl] = useState(exampleDynamicUrl);

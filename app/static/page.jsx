@@ -13,7 +13,7 @@ export default function StaticPage() {
 
   const result = useMemo(() => parseUrl(currentUrl), [currentUrl]);
   const exampleStaticUrl =
-    typeof window === 'undefined' ? '/static?child=483920' : `${window.location.origin}/static?child=483920`;
+    typeof window === 'undefined' ? '/static?child=AB483Z' : `${window.location.origin}/static?child=AB483Z`;
 
   return (
     <>
@@ -25,21 +25,21 @@ export default function StaticPage() {
             <h1>Static child field</h1>
           </div>
           <p className="lede">
-            This page reads the current page URL and displays the six-digit value from the
+            This page reads the current page URL and displays the value from the
             <code> child </code>
             field.
           </p>
 
           <label className="field">
             <span>Child code</span>
-            <input readOnly value={result.childCode || 'No six-digit child code found'} />
+            <input readOnly value={result.childCode || 'No child field found'} />
           </label>
 
-          <CopyButton text={result.childCode || 'No six-digit child code found'} label="Copy child code" />
+          <CopyButton text={result.childCode || 'No child field found'} label="Copy child code" />
 
           <div className="example">
             <span>Try this URL</span>
-            <a href="/static?child=483920">{exampleStaticUrl}</a>
+            <a href="/static?child=AB483Z">{exampleStaticUrl}</a>
           </div>
         </section>
       </main>

@@ -36,13 +36,14 @@ export function parseUrl(rawUrl) {
     const explicitChild = fields.find((field) => field.key.toLowerCase() === 'child');
     const pathChild = parsed.pathname.match(/(?:^|\/)(\d{6})(?:\/|$)/);
     const anySixDigitValue = fields.flatMap((field) => field.values).find((value) => /^\d{6}$/.test(value));
+    const childFieldValue = explicitChild?.values.find((value) => value.trim().length > 0);
 
     return {
       ok: true,
       href: parsed.href,
       origin: parsed.origin,
       pathname: parsed.pathname,
-      childCode: explicitChild?.values.find((value) => /^\d{6}$/.test(value)) || pathChild?.[1] || anySixDigitValue || '',
+      childCode: childFieldValue || pathChild?.[1] || anySixDigitValue || '',
       fields,
     };
   } catch {
