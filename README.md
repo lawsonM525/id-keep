@@ -28,9 +28,15 @@ ID Keep checks:
 
 - Query string fields, like `?child=483920`
 - Hash fields, like `#child=483920`
-- Six-character alphanumeric codes in the URL path, like `/child/AB483Z`
 
-If a `child` field has a six-character alphanumeric value, that value is shown as the child code. If there is no valid `child` field, the app can still fall back to a six-character alphanumeric code found in the URL path or another field value.
+If a `child` field has a six-character alphanumeric value, that value is shown as the child code. If the `child` field is missing or invalid, the app shows a clear message instead of guessing from another part of the URL.
+
+Validation messages include:
+
+- `No child code`
+- `Too short: needs 6 characters`
+- `Too long: max 6 characters`
+- `Invalid character: -`
 
 ## Local Development
 

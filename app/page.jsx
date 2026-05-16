@@ -37,9 +37,9 @@ export default function DynamicPage() {
           </label>
 
           <div className="result-grid">
-            <div className="result-card">
+            <div className={`result-card ${result.childCode ? '' : 'warning'}`}>
               <span>Child code</span>
-              <strong>{result.childCode || 'Not found'}</strong>
+              <strong>{result.childCode || result.childMessage || 'No child code'}</strong>
             </div>
             <div className="result-card">
               <span>Status</span>
@@ -47,7 +47,7 @@ export default function DynamicPage() {
             </div>
           </div>
 
-          <CopyButton text={result.childCode || 'No six-character child code found'} label="Copy child code" />
+          <CopyButton text={result.childCode} label="Copy child code" disabled={!result.childCode} />
 
           {!result.ok ? <p className="error">{result.error}</p> : <FieldTable fields={result.fields} />}
         </section>

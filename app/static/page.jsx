@@ -32,10 +32,10 @@ export default function StaticPage() {
 
           <label className="field">
             <span>Child code</span>
-            <input readOnly value={result.childCode || 'No six-character child code found'} />
+            <input readOnly value={result.childCode || result.childMessage || 'No child code'} />
           </label>
 
-          <CopyButton text={result.childCode || 'No six-character child code found'} label="Copy child code" />
+          <CopyButton text={result.childCode} label="Copy child code" disabled={!result.childCode} />
 
           <div className="example">
             <span>Try this URL</span>

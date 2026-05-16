@@ -109,6 +109,12 @@ nav a:hover {
   background: #e84d15;
 }
 
+.copy-button:disabled {
+  cursor: not-allowed;
+  background: #c9d2df;
+  box-shadow: none;
+}
+
 .copy-button:focus-visible {
   outline: 3px solid rgba(255, 90, 31, 0.28);
   outline-offset: 3px;
@@ -247,6 +253,10 @@ textarea:focus {
 .result-card strong {
   font-size: 1.35rem;
   letter-spacing: 0;
+}
+
+.result-card.warning strong {
+  color: #9f2d2d;
 }
 
 .table-wrap {

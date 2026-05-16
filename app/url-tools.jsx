@@ -15,14 +15,59 @@ function collectParams(params, source, fields) {
   });
 }
 
-function isSixCharacterCode(value) {
-  return /^[a-z0-9]{6}$/i.test(value.trim());
+function getChildCodeMessage(value) {
+  const trimmed = value.trim();
+  const invalidCharacter = trimmed.match(/[^a-z0-9]/i)?.[0];
+
+  if (!trimmed) {
+    return 'No child code';
+  }
+
+  if (invalidCharacter) {
+    const label = invalidCharacter === ' ' ? 'space' : invalidCharacter;
+    return `Invalid character: ${label}`;
+  }
+
+  if (trimmed.length < 6) {
+    return 'Too short: needs 6 characters';
+  }
+
+  if (trimmed.length > 6) {
+    return 'Too long: max 6 characters';
+  }
+
+  return '';
+}
+
+function getChildCode(fields) {
+  const explicitChild = fields.find((field) => field.key.toLowerCase() === 'child');
+
+  if (explicitChild) {
+    const value = explicitChild.values[0] || '';
+    const error = getChildCodeMessage(value);
+
+    return {
+      childCode: error ? '' : value.trim(),
+      childMessage: error,
+    };
+  }
+
+  return {
+    childCode: '',
+    childMessage: 'No child code',
+  };
 }
 
 export function parseUrl(rawUrl) {
   const trimmed = rawUrl.trim();
   if (!trimmed) {
-    return { ok: false, error: 'Paste a URL to inspect its fields.', childCode: '', fields: [] };
+    return {
+      ok: false,
+      error: 'Paste a URL to inspect its fields.',
+      childCode: '',
+      childMessage: 'No child code',
+      fields: [],
+    };
   }
 
   try {
@@ -37,17 +82,14 @@ export function parseUrl(rawUrl) {
       collectParams(new URLSearchParams(hashQuery), 'hash', fields);
     }
 
-    const explicitChild = fields.find((field) => field.key.toLowerCase() === 'child');
-    const pathChild = parsed.pathname.match(/(?:^|\/)([a-z0-9]{6})(?:\/|$)/i);
-    const anySixCharacterValue = fields.flatMap((field) => field.values).find(isSixCharacterCode);
-    const childFieldValue = explicitChild?.values.find(isSixCharacterCode);
+    const childResult = getChildCode(fields);
 
     return {
       ok: true,
       href: parsed.href,
       origin: parsed.origin,
       pathname: parsed.pathname,
-      childCode: childFieldValue || pathChild?.[1] || anySixCharacterValue || '',
+      ...childResult,
       fields,
     };
   } catch {
@@ -55,6 +97,7 @@ export function parseUrl(rawUrl) {
       ok: false,
       error: 'That does not look like a valid URL yet.',
       childCode: '',
+      childMessage: 'No child code',
       fields: [],
     };
   }
@@ -77,17 +120,21 @@ async function copyText(text) {
   document.body.removeChild(textarea);
 }
 
-export function CopyButton({ text, label, variant = 'primary' }) {
+export function CopyButton({ text, label, variant = 'primary', disabled = false }) {
   const [copied, setCopied] = useState(false);
 
   async function handleCopy() {
+    if (disabled) {
+      return;
+    }
+
     await copyText(text);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1600);
   }
 
   return (
-    <button className={`copy-button ${variant}`} type="button" onClick={handleCopy}>
+    <button className={`copy-button ${variant}`} type="button" onClick={handleCopy} disabled={disabled}>
       {copied ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
       {copied ? 'Copied' : label}
     </button>
