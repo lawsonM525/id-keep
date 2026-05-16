@@ -1,0 +1,63 @@
+# ID Keep
+
+ID Keep is a simple Next.js app for pulling ID-style values out of links.
+
+## What It Does
+
+The app has two pages:
+
+- `/` lets someone paste a link and see the values attached to it.
+- `/static` reads the current page URL and shows the six-digit `child` code if one is present.
+
+For example, this link:
+
+```txt
+https://example.com/form?child=483920&case=summer
+```
+
+will show:
+
+- `child` = `483920`
+- `case` = `summer`
+
+The app also includes copy buttons so people can copy the child code or an individual field value.
+
+## How Fields Are Found
+
+ID Keep checks:
+
+- Query string fields, like `?child=483920`
+- Hash fields, like `#child=483920`
+- Six-digit codes in the URL path, like `/child/483920`
+
+If a `child` field has a six-digit value, that value is shown as the child code.
+
+## Local Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the dev server:
+
+```bash
+npm run dev
+```
+
+Open:
+
+```txt
+http://localhost:3000
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+## Deploy
+
+This app is ready to deploy on Vercel. Import the GitHub repo into Vercel and use the default Next.js settings.
