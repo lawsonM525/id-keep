@@ -18,14 +18,14 @@ export default function DynamicPage() {
         <section className="panel">
           <div className="section-title">
             <Search aria-hidden="true" />
-            <h1>Dynamic URL inspector</h1>
+            <h1>Find the child code in a link</h1>
           </div>
           <p className="lede">
-            Paste any URL and this page will extract its fields, values, and six-digit child code.
+            Paste a link below to pull out the child code and any other values attached to it.
           </p>
 
           <label className="field">
-            <span>URL to inspect</span>
+            <span>Paste link here</span>
             <textarea value={url} onChange={(event) => setUrl(event.target.value)} />
           </label>
 
