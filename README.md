@@ -28,9 +28,9 @@ ID Keep checks:
 
 - Query string fields, like `?child=483920`
 - Hash fields, like `#child=483920`
-- Six-digit codes in the URL path, like `/child/483920`
+- Six-character alphanumeric codes in the URL path, like `/child/AB483Z`
 
-If a `child` field has any non-empty value, that value is shown as the child code. If there is no `child` field, the app can still fall back to a six-digit code found in the URL path or another field value.
+If a `child` field has a six-character alphanumeric value, that value is shown as the child code. If there is no valid `child` field, the app can still fall back to a six-character alphanumeric code found in the URL path or another field value.
 
 ## Local Development
 

@@ -15,6 +15,10 @@ function collectParams(params, source, fields) {
   });
 }
 
+function isSixCharacterCode(value) {
+  return /^[a-z0-9]{6}$/i.test(value.trim());
+}
+
 export function parseUrl(rawUrl) {
   const trimmed = rawUrl.trim();
   if (!trimmed) {
@@ -34,16 +38,16 @@ export function parseUrl(rawUrl) {
     }
 
     const explicitChild = fields.find((field) => field.key.toLowerCase() === 'child');
-    const pathChild = parsed.pathname.match(/(?:^|\/)(\d{6})(?:\/|$)/);
-    const anySixDigitValue = fields.flatMap((field) => field.values).find((value) => /^\d{6}$/.test(value));
-    const childFieldValue = explicitChild?.values.find((value) => value.trim().length > 0);
+    const pathChild = parsed.pathname.match(/(?:^|\/)([a-z0-9]{6})(?:\/|$)/i);
+    const anySixCharacterValue = fields.flatMap((field) => field.values).find(isSixCharacterCode);
+    const childFieldValue = explicitChild?.values.find(isSixCharacterCode);
 
     return {
       ok: true,
       href: parsed.href,
       origin: parsed.origin,
       pathname: parsed.pathname,
-      childCode: childFieldValue || pathChild?.[1] || anySixDigitValue || '',
+      childCode: childFieldValue || pathChild?.[1] || anySixCharacterValue || '',
       fields,
     };
   } catch {

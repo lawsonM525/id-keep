@@ -47,7 +47,7 @@ export default function DynamicPage() {
             </div>
           </div>
 
-          <CopyButton text={result.childCode || 'No child code found'} label="Copy child code" />
+          <CopyButton text={result.childCode || 'No six-character child code found'} label="Copy child code" />
 
           {!result.ok ? <p className="error">{result.error}</p> : <FieldTable fields={result.fields} />}
         </section>
